@@ -1,0 +1,169 @@
+
+@import "variables";
+// Clearfix
+%clearfix {
+    *zoom: 1;
+    &:before,
+    &:after {
+        content: " ";
+        display: table;
+    }
+    &:after {
+        clear: both;
+    }
+}
+
+// Opacity
+@mixin opacity($opacity) {
+  opacity: $opacity;
+  $opacity-ie: $opacity * 100;
+  filter: alpha(opacity=$opacity-ie); //IE8
+}
+
+
+// IE Conditionals
+@mixin ie ($target) {
+        body.ie#{$target} & {
+    @content;
+    }
+}
+
+// Transitions
+@mixin transition($args...) {
+  -webkit-transition: $args;
+  -moz-transition: $args;
+  -ms-transition: $args;
+  -o-transition: $args;
+  transition: $args;
+}
+
+/// Mixin helper to output vendor-prefixed CSS
+@mixin prefix($property, $value, $prefixes: ()) {
+  @each $prefix in $prefixes {
+    -#{$prefix}-#{$property}: $value;
+  }
+
+  #{$property}: $value;
+}
+
+// Center Horizontally
+@mixin center-block {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+// Center vertically and horizontally
+@mixin center-both {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    @include prefix(transform, translate(-50%, -50%), 'webkit' 'ms');
+}
+
+// Center Vertically
+@mixin vertical-align($position: relative) {
+  position: $position;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+
+// Center Horizontally
+@mixin horizontal-align($position: relative) {
+  position: $position;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  -ms-transform: translateX(-50%);
+  transform: translateX(-50%);
+}
+
+/* Center Height */
+@mixin center-h($height) {
+    position: absolute;
+    top: 50%;
+    height: $height;
+    margin-top: -($height / 2);
+}
+
+// Placeholder mixin
+@mixin placeholder {
+  &::-webkit-input-placeholder {@content}
+  &:-moz-placeholder           {@content}
+  &::-moz-placeholder          {@content}
+  &:-ms-input-placeholder      {@content}
+}
+
+@keyframes slideInRight {
+    from {
+        transform: translate3d(100%, 0, 0);
+        visibility: visible;
+    }
+
+    to {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+// Media Query mixin
+@mixin breakpoint($point) {
+  @if $point == small {
+    @media (max-width: 39.938em) { @content; }
+  }
+  @else if $point == medium {
+    @media (max-width: 63.938em) { @content; }
+  }
+  @else if $point == large {
+    @media (min-width: 50em)  { @content; }
+  }
+}
+
+//brand service color mixin 
+
+@mixin servicecolor($service) {
+  @if $service == strategy {
+    background-color: $blue;
+  }
+  @else if $service == branding {
+    background-color: $orange;
+  }
+  @else if $service == technology {
+      background-color: $yellow;
+  }
+
+}
+
+@mixin ellipsesWidth($maxWidth) {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: $maxWidth;
+    overflow: hidden;
+}
+
+@mixin ellipsesHeight($maxHeight) {
+    display: block;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-height: $maxHeight;
+    overflow: hidden;
+}
+
+@mixin slideRightAnimation {
+    transition: -webkit-transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out, -webkit-transform 0.3s ease-in-out;
+    &:hover, &:focus {
+    transform:translateX(20px);
+    }
+}
+
+@mixin slideLeftAnimation {
+    transition: -webkit-transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out;
+    transition: transform 0.4s ease-in-out, -webkit-transform 0.3s ease-in-out;
+    &:hover, &:focus {
+    transform:translateX(-20px);
+    }
+}
